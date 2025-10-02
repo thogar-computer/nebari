@@ -24,6 +24,17 @@ module "postgresql" {
   node-group = var.node-group
 
   database = "conda-store"
+  overrides = [
+    # TODO: Remove hardcoded image values after Helm chart update
+      # This is a workaround due to bitnami charts deprecation
+      # See: https://github.com/bitnami/charts/issues/35164
+      # See: https://github.com/nebari-dev/nebari/issues/3120
+      image = {
+        registry   = "docker.io"
+        repository = "bitnamilegacy/postgresql"
+        tag        = "11.14.0"
+      }
+  ]
 }
 
 
